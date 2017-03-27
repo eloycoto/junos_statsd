@@ -11,8 +11,10 @@ def ToDOT(root, prefix):
     prefix += ".{0}".format(root.tag.title().replace("-", ""))
     if len(root.getchildren()) == 0:
         result = root.attrib.get("name", root.text)
-        if isinstance(result, str) and result.isdigit():
-            yield(prefix, result)
+        if isinstance(result, str):
+            result = result.strip()
+            if result.isdigit():
+                yield(prefix, result)
     for elem in root.getchildren():
         for e in ToDOT(elem, prefix):
             yield e
