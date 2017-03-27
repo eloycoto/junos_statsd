@@ -11,7 +11,7 @@ def ToDOT(root, prefix):
     prefix += ".{0}".format(root.tag.title().replace("-", ""))
     if len(root.getchildren()) == 0:
         result = root.attrib.get("name", root.text)
-        if result.isdigit():
+        if isinstance(result, str) and result.isdigit():
             yield(prefix, result)
     for elem in root.getchildren():
         for e in ToDOT(elem, prefix):
@@ -39,8 +39,11 @@ class Junos(threading.Thread):
 
     def run(self):
         self.dev.open()
-        result = self.gather_data()
-        self.dev.close()
+        try:
+            result = self.gather_data()
+            self.dev.close()
+        except:
+            self.dev.close()
         return result
 
 
