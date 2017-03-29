@@ -35,8 +35,13 @@ class Junos(threading.Thread):
 
     def gather_data(self):
         for command in self.commands:
-            root = self.dev.cli(command, format="xml")
-            for e in ToDOT(root, self.label):
+            prefix = command.get('prefix')
+            if prefix:
+                prefix = "{0}.{1}".format(self.label, prefix)
+            else:
+                prefix = self.label
+            root = self.dev.cli(command.get('cmd'), format="xml")
+            for e in ToDOT(root, prefix):
                 self.result.append(e)
 
     def run(self):

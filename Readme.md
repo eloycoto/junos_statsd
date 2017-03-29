@@ -16,9 +16,9 @@ junos:
     host: '<host>'
     port: '<port>'
     commands:
-      - "show security monitoring node all"
-      - "show system buffers"
-      - "show route summary"
+      - {"cmd": "show security monitoring node all", "prefix": "custom"}
+      - {"cmd": "show system buffers"}
+      - {"cmd": "show route summary"}
 ```
 
 
